@@ -1,0 +1,7 @@
+.pixel {
+    background-color: black;
+}
+
+#gameBoard, #gameBoard > div {
+    gap: 15px;
+}
