@@ -2,28 +2,58 @@
 //
 
 type Player = {
+    name: string;
     number: number;
     ticVal: string;
 }
 
-let player1 = {number: 2, ticVal: 'O'};
+let currentTurn = 0;
 
+
+const playerFactory = (name:string, playerNum:number) => {
+	let ticVal = '';
+	if (playerNum === 1) {
+		ticVal = 'O';
+	} else {
+		ticVal = 'X';
+        }
+	return {name, number: playerNum, ticVal};
+}
+
+let player1 = playerFactory('Billy', 1);
+let player2 = playerFactory('Computer', 2);
 let currentPlayer = player1;
 
 const buildBoard = (() => {
     // functions
+	const playAudio = (playerNum: number) => {
+		if (playerNum === 1) {
+			let moonSnd = new Audio('./sounds/magical-surprise.mp3');
+			moonSnd.play();
+		} else {
+			let starSnd = new Audio('./sounds/shooting-star.mp3');
+			starSnd.play();
+		}
+
+		// let gameFinish = new Audio('./sounds/star-sounds.mp3');
+	}
+
 	const playTurn = (player: Player, cell: HTMLElement, index: number, handler: any) => {
 		let tic = document.createElement('div');
+		console.log(player);
 		tic.style.display = 'flex';
 		tic.style.width = '100%';
 		tic.style.height = '100%';
 		if (player.number === 1) {
 			tic.style.backgroundImage = "url(./images/eclipse-flare.svg)";
+			playAudio(1);
 		} else {
 			tic.style.backgroundImage = "url(./images/sparkles.svg)";
+			playAudio(2);
 		}
 		cell.appendChild(tic);
 		ticTacArray[index] = player.ticVal;
+		console.log(ticTacArray);
 		cell.removeEventListener('mousedown', handler);
 	}
     
@@ -32,7 +62,14 @@ const buildBoard = (() => {
 
 		let handleEvent = () => {
 			console.log(index);
-			playTurn(currentPlayer, pixel, index, handleEvent);
+			if (currentTurn % 2 === 0) {
+				console.log(currentTurn);
+				currentTurn += 1;
+				playTurn(player1, pixel, index, handleEvent);
+			} else {
+				currentTurn += 1;
+				playTurn(player2, pixel, index, handleEvent);
+			}
 		}
 
 		let pixel = document.createElement('div');
@@ -89,9 +126,9 @@ const buildBoard = (() => {
     return {boardContainer, ticTacArray}
 })();
 
-/* const playerFactory = (name:string) => {
-    return {name, state, play()}
-} */
+const checkBoard = (gameState: array) => {
+	
+}
 
 let gameBoard = buildBoard;
 document.body.appendChild(gameBoard.boardContainer);
