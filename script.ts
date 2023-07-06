@@ -1,6 +1,3 @@
-// woah typescript!
-//
-
 type Player = {
     name: string;
     number: number;
@@ -23,9 +20,22 @@ const playerFactory = (name:string, playerNum:number) => {
 let player1 = playerFactory('Billy', 1);
 let player2 = playerFactory('Computer', 2);
 let currentPlayer = player1;
+let gameBoard = document.getElementById('gameBoard');
+if (gameBoard === null) {
+	throw new Error('gameBoard is null');
+}
 
 const buildBoard = (() => {
-    // functions
+	// variables
+	let index = 0;
+	const size = 3;
+	let ticTacArray: (number | string)[] =
+		[0,0,0
+		,0,0,0
+		,0,0,0];
+	
+
+	// functions
 	const playAudio = (playerNum: number) => {
 		if (playerNum === 1) {
 			let moonSnd = new Audio('./sounds/magical-surprise.mp3');
@@ -36,6 +46,21 @@ const buildBoard = (() => {
 		}
 
 		// let gameFinish = new Audio('./sounds/star-sounds.mp3');
+	}
+
+	const checkBoard = (gameState: (number | string)[], player: Player) => {
+		const flattenBoard = (gameState: (number | string)[], ticVal: number | string) => {
+			return gameState.map(tic => {
+				if (tic === ticVal) {
+					return '🏆';
+				} else {
+					return '0';
+				}
+			});
+		}
+
+		let gameStateNew = flattenBoard(gameState, player.ticVal);
+		console.log("Current Player Win State: " + gameStateNew);
 	}
 
 	const playTurn = (player: Player, cell: HTMLElement, index: number, handler: any) => {
@@ -63,12 +88,13 @@ const buildBoard = (() => {
 		let handleEvent = () => {
 			console.log(index);
 			if (currentTurn % 2 === 0) {
-				console.log(currentTurn);
 				currentTurn += 1;
 				playTurn(player1, pixel, index, handleEvent);
+				checkBoard(ticTacArray, player1);
 			} else {
 				currentTurn += 1;
 				playTurn(player2, pixel, index, handleEvent);
+				checkBoard(ticTacArray, player2);
 			}
 		}
 
@@ -100,16 +126,13 @@ const buildBoard = (() => {
 		return row;
 	};
     
-    let index = 0;
-    const size = 3;
-    let ticTacArray: (number | string)[] = [0,0,0,0,0,0,0,0,0];
 
-    let boardContainer = document.createElement('div');
+    /* let boardContainer = document.createElement('div');
     boardContainer.style.display = 'flex';
     boardContainer.style.flexDirection = 'column';
     boardContainer.style.width = '800px';
     boardContainer.style.height = '800px';
-    boardContainer.id = 'gameBoard';
+    boardContainer.id = 'gameBoard'; */
 
     for (let x = 0; x < size; x++) {
         let row = makeRow();
@@ -119,19 +142,11 @@ const buildBoard = (() => {
 	    index++;
 	    
         }
-        boardContainer.appendChild(row);
+	gameBoard.appendChild(row);
     }
-
-
-    return {boardContainer, ticTacArray}
 })();
 
-const checkBoard = (gameState: array) => {
-	
-}
 
-let gameBoard = buildBoard;
-document.body.appendChild(gameBoard.boardContainer);
 // Prompt for player names, instantiate instances of these objects (using factory functions)
 //
 // make gameboard
