@@ -1,7 +1,45 @@
-.pixel {
+body {
+    background-image: url(./images/heaven.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.pixel_bg {
     background-color: black;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+    transition-property: background-image;
+    transition-duration: 1s;
+    transition-timing-function: ease-out;
+    transition-delay: 0.25s;
+}
+
+.pixel_fg
+
+.moon {
+    background-image: url(./images/eclipse-flare.svg);
+}
+
+.stars {
+    background-image: url(./images/sparkles.svg);
+}
+
+#gameBoard {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    height: 800px;
+
 }
 
 #gameBoard, #gameBoard > div {
     gap: 15px;
 }
+
+

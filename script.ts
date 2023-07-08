@@ -36,12 +36,18 @@ const buildBoard = (() => {
 	
 
 	// functions
-	const playAudio = (playerNum: number) => {
-		if (playerNum === 1) {
+	const playAudio = (playerNum: number, winState: boolean) => {
+		if (winState === true) {
+			let winSnd = new Audio('./sounds/star-sounds.mp3')
+			winSnd.volume = 0.9;
+			winSnd.play();
+		} else if (playerNum === 1) {
 			let moonSnd = new Audio('./sounds/magical-surprise.mp3');
+			moonSnd.volume = 0.4;
 			moonSnd.play();
 		} else {
 			let starSnd = new Audio('./sounds/shooting-star.mp3');
+			starSnd.volume = 0.4;
 			starSnd.play();
 		}
 
@@ -51,16 +57,62 @@ const buildBoard = (() => {
 	const checkBoard = (gameState: (number | string)[], player: Player) => {
 		const flattenBoard = (gameState: (number | string)[], ticVal: number | string) => {
 			return gameState.map(tic => {
-				if (tic === ticVal) {
+				if (tic == ticVal) {
 					return '🏆';
 				} else {
-					return '0';
+					return '🔲';
 				}
 			});
 		}
-
+		
+		//BUG: When there a player has made more than 3 moves, the flattened board will never match any win state.
 		let gameStateNew = flattenBoard(gameState, player.ticVal);
 		console.log("Current Player Win State: " + gameStateNew);
+
+		const winStates = [
+			// Horizontal wins
+			['🏆', '🏆', '🏆',
+			'🔲', '🔲', '🔲',
+			'🔲', '🔲', '🔲'],
+
+			['🔲', '🔲', '🔲',
+			'🏆', '🏆', '🏆',
+			'🔲', '🔲', '🔲'],
+
+			['🔲', '🔲', '🔲',
+			'🔲', '🔲', '🔲',
+			'🏆', '🏆', '🏆'],
+
+			// Vertical wins
+			['🏆', '🔲', '🔲',
+			'🏆', '🔲', '🔲',
+			'🏆', '🔲', '🔲'],
+
+			['🔲', '🏆', '🔲',
+			'🔲', '🏆', '🔲',
+			'🔲', '🏆', '🔲'],
+
+			['🔲', '🔲', '🏆',
+			'🔲', '🔲', '🏆',
+			'🔲', '🔲', '🏆'],
+
+			// Diagonal wins
+			['🏆', '🔲', '🔲',
+			'🔲', '🏆', '🔲',
+			'🔲', '🔲', '🏆'],
+
+			['🔲', '🔲', '🏆',
+			'🔲', '🏆', '🔲',
+			'🏆', '🔲', '🔲']
+		];
+
+		for (let i = 0; i < winStates.length; i++) {
+			if (gameStateNew.toString() === winStates[i].toString()) {
+				playAudio(3, true);
+				console.log(player.name + " wins!");
+			}
+		}
+
 	}
 
 	const playTurn = (player: Player, cell: HTMLElement, index: number, handler: any) => {
@@ -70,15 +122,17 @@ const buildBoard = (() => {
 		tic.style.width = '100%';
 		tic.style.height = '100%';
 		if (player.number === 1) {
-			tic.style.backgroundImage = "url(./images/eclipse-flare.svg)";
-			playAudio(1);
+			// I was trying to make the buttons animate the background image, but it didn't work. Ill figure it out later
+			cell.style.backgroundImage = "url(./images/eclipse-flare.svg)";
+			cell.classList.add('moon');
+			playAudio(1, false);
 		} else {
-			tic.style.backgroundImage = "url(./images/sparkles.svg)";
-			playAudio(2);
+			cell.firstChild.backgroundImage = "url(./images/sparkles.svg)";
+			cell.classList.add('stars');
+			playAudio(2, false);
 		}
 		cell.appendChild(tic);
 		ticTacArray[index] = player.ticVal;
-		console.log(ticTacArray);
 		cell.removeEventListener('mousedown', handler);
 	}
     
@@ -99,8 +153,11 @@ const buildBoard = (() => {
 		}
 
 		let pixel = document.createElement('div');
+		let pixel2 = document.createElement('div');
+		pixel2.classList.add('pixel_bg');
+		pixel.appendChild(pixel2);
 
-		pixel.classList.add('pixel');
+		pixel.classList.add('pixel_bg');
 		pixel.id = index.toString();
 
 		/* Styling */
