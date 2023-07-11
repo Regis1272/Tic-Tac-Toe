@@ -215,7 +215,7 @@ function transitionForeground() {
     emitLoopAudio();
 }
 function emitLoopAudio() {
-    let music = new Audio('./sounds/Jellyfish in Space.mp3');
+    let music = new Audio('./assets/sounds/Jellyfish in Space.mp3');
     music.loop = true;
     setTimeout(() => { music.play(); }, 500);
 }
