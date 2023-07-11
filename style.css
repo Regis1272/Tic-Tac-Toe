@@ -5,7 +5,7 @@
 
 body {
     font-family: 'Ferrum', sans-serif;
-    background-image: url(./images/heaven.jpg);
+    background-image: url(./assets/images/heaven.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     width: 100vw;
@@ -21,23 +21,57 @@ body {
 }
 
 #foreground {
+    background-image: url(./assets/images/full-moon.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: black;
+    /* background-color: black; */
     box-shadow: 0 0 80px 0 rgba(255, 150, 0, 0.5);
+    text-shadow: 1px 1px 2px red, 0 0 1em blue, 0 0 1em blue;
     transition: transform 2s ease-out 0.25s;
     color: rgb(255, 150, 0);
 }
 
-#foreground h2 {
+#foreground > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     color: rgb(255, 150, 0);
-    font-size: 1rem;
+    font-size: 7rem;
+    gap: 20px;
 }
 
-#curve {
+#titleText > span{
+    text-decoration: underline;
+}
+
+#hookText {
+    font-size: 3rem;
+    color: rgb(200, 150, 0);
+}
+
+#subtitle {
+    font-size: 5rem;
+}
+
+button {
+    width: 200px;
+    height: 50px;
+    border: 1px solid rgb(255, 150, 0);
+    border-radius: 100px;
+    background-image: linear-gradient(to bottom right, rgb(255, 150, 0), rgb(100, 255, 100));
+    font-family: 'Ferrum', sans-serif;
+    font-size: 2rem;
+}
+
+/* #curve {
 }
 
 #svgSlide {
@@ -47,7 +81,7 @@ body {
 text {
     font-size: 2rem;
     fill: rgb(255, 150, 0);
-}
+} */
 
 .slideOut {
     transform: translateY(-100%);
@@ -91,7 +125,7 @@ text {
     width: 100%;
     height: 100%;
     border-radius: 20px;
-    transition: background-color 1s ease-out 0.25s;
+    transition: background-color 2s ease-out 0.25s;
 }
 
 .square_fade {
@@ -99,11 +133,11 @@ text {
 }
 
 .moon {
-    background-image: url(./images/eclipse-flare.svg);
+    background-image: url(./assets/images/eclipse-flare.svg);
 }
 
 .stars {
-    background-image: url(./images/sparkles.svg);
+    background-image: url(./assets/images/sparkles.svg);
 }
 
 #gameBoard, #gameBoard > div {

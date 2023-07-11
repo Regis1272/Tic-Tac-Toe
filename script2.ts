@@ -19,11 +19,11 @@ let currentTurn = 1;
 
 const emitPlayerAudio = (playerId: number) => {
     if (playerId === 1) {
-        let moonSnd = new Audio('./sounds/magical-surprise.mp3');
+        let moonSnd = new Audio('./assets/sounds/magical-surprise.mp3');
 		moonSnd.volume = 0.4;
 		moonSnd.play();
     } else {
-        let starSnd = new Audio('./sounds/shooting-star.mp3');
+        let starSnd = new Audio('./assets/sounds/shooting-star.mp3');
         starSnd.volume = 0.4;
         starSnd.play();
     }
@@ -58,9 +58,6 @@ const makePlayer = (name:string, playerChoice:string) => {
         }
 	return {name, id: playerNum, ticVal};
 }
-
-let player1 = makePlayer('Xarbo', 'moon');
-let player2 = makePlayer('Computer', 'stars');
 
 //Immediately initialize board
 const buildBoard = (() => {
@@ -263,12 +260,38 @@ function animateSqr(playerId: number, square: HTMLElement) {
     square.classList.add('square_fade');
 }
 
-function testTranslate() {
-    let test = document.getElementById('foreground') as HTMLElement;
-    let test2 = document.getElementById('svgSlide') as HTMLElement;
-    test.classList.add('slideOut');
-    test2.classList.add('slideOut');
+function transitionForeground() {
+    let fg = document.getElementById('foreground') as HTMLElement;
+    fg.classList.add('slideOut');
+    emitLoopAudio();
 }
+
+function emitLoopAudio() {
+    let music = new Audio('./sounds/Jellyfish in Space.mp3');
+    music.loop = true;
+    setTimeout(() => {music.play()}, 500);
+}
+
+function handleButton(button: HTMLElement) {
+    transitionForeground();
+    emitLoopAudio();
+    if (button.id === 'moonButton') {
+        player1 = makePlayer('Player 1', 'moon');
+        player2 = makePlayer('Player 2', 'stars');
+    } else {
+        player1 = makePlayer('Player 1', 'stars');
+        player2 = makePlayer('Player 2', 'moon');
+    }
+}
+
+let player1: Player;
+let player2: Player;
+
+let moonButton = document.getElementById('moonButton') as HTMLElement;
+let starButton = document.getElementById('starButton') as HTMLElement;
+
+moonButton.addEventListener('click', () => {handleButton(moonButton)});
+starButton.addEventListener('click', () => {handleButton(starButton)});
 
 let ticTacArray: GameState =
 		[0,0,0

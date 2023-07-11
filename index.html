@@ -9,15 +9,25 @@
 <body>
     <div id='screen'>
         <div id='foreground'>
-            <svg viewBox="0 0 500 500" id="svgSlide">
-                <path id="curve" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" />
-                <text>
-                    <textPath href="#curve" startOffset="50%" text-anchor="middle">
-                         🌔✨Moon and Stars✨🌖
-                    </textPath>
-                </text>
-                <text x="50%" y="200" text-anchor="middle">Will you eclipse your opponent?</text>
-            </svg>
+            <div id='title'>
+                <div id='hookText'>
+                    Divine Portents draw your gaze to the heavens above...
+                </div>
+
+                <div id='titleText'>
+                    🌔✨<span>Moon and Stars</span>✨🌖
+                </div>
+
+                <div id='subtitle'>
+                    Will you eclipse your opponent?
+                </div>
+
+                <div id='buttonContainer'>
+                    <button id='moonButton'>Moon</button>
+                    <button id='starButton'>Stars</button>
+                </div>
+
+            </div>
 
         </div>
         <audio src="./sounds/Jellyfish in Space.mp3" loop type="audio/mpeg"></audio>
