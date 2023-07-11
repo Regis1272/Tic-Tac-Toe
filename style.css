@@ -10,17 +10,33 @@ body {
     align-items: center;
 }
 
-.pixel_bg {
-    background-color: black;
-    border-radius: 20px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
-    transition-property: background-image;
-    transition-duration: 1s;
-    transition-timing-function: ease-out;
-    transition-delay: 0.25s;
+.row {
+    display: flex;
+    width: 100%;
+    height: 100%;
 }
 
-.pixel_fg
+.square_bg {
+    background-color: black;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.square_fg {
+    background-color: black;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    transition: background-color 1s ease-out 0.25s;
+}
+
+.square_fade {
+    background-color: transparent;
+}
 
 .moon {
     background-image: url(./images/eclipse-flare.svg);
