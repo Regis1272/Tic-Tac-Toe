@@ -7,12 +7,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div id='screen'>
+        <div id='foreground'>
+            <svg viewBox="0 0 500 500" id="svgSlide">
+                <path id="curve" d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97" />
+                <text>
+                    <textPath href="#curve" startOffset="50%" text-anchor="middle">
+                         🌔✨Moon and Stars✨🌖
+                    </textPath>
+                </text>
+                <text x="50%" y="200" text-anchor="middle">Will you eclipse your opponent?</text>
+            </svg>
 
-    <div id='gameBoard'></div>
-    <audio src="./sounds/Jellyfish in Space.mp3" controls autoplay loop type="audio/mpeg"></audio>
-    <p> "Jellyfish in Space" Kevin MacLeod (incompetech.com)
-Licensed under Creative Commons: By Attribution 4.0 License
-http://creativecommons.org/licenses/by/4.0/ </p>
+        </div>
+        <audio src="./sounds/Jellyfish in Space.mp3" loop type="audio/mpeg"></audio>
+        <div id='gameBoard'></div>
+
+    </div>
+
+    <div id='footer'>
+
+        <div id='licenses'>
+            <div>
+                Music licensed under Creative Commons: <a href='https://creativecommons.org/licenses/by/4.0/legalcode'>By Attribution 4.0 License</a>
+            </div>
+            <div>
+                Icons licensed under Creative Commons: <a href='https://creativecommons.org/licenses/by/3.0/legalcode'>By Attribution 3.0 License</a> 
+            </div>
+        </div>
+
+        <div id='copyright'>
+            Copyright © <a href='https://github.com/Regis1272'>Regis1272</a> 2023
+        </div>
+
+        <div id='credit'>
+            <div>
+                Music - 
+                "Jellyfish in Space" by <a href='https://incompetech.com/'>Kevin MacLeod</a>
+            </div>
+
+            <div>
+                Sounds - 
+                <a href='https://pixabay.com/sound-effects/the-magical-surprise-141291/'>UNIVERSFIELD</a> and <a href='https://pixabay.com/sound-effects/shooting-star-101304/'>Pixabay</a>
+            </div>
+
+            <div>
+                Icons - 
+                <a href='https://game-icons.net/1x1/delapouite/sparkles.html'>Delapouite</a> and <a href='https://game-icons.net/1x1/lorc/moon.html'>Lorc</a>
+            </div>
+
+        </div>
+    </div>
+
     <script src='script2.js'></script>
 </body>
 </html>

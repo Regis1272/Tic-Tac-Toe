@@ -1,13 +1,73 @@
+@font-face {
+    font-family: 'Ferrum';
+    src: url('./assets/ferrum-font/Ferrum-wy99.otf') format('opentype');
+}
+
 body {
+    font-family: 'Ferrum', sans-serif;
     background-image: url(./images/heaven.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    width: 100vw;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    font-size 18px;
+}
+
+#foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    box-shadow: 0 0 80px 0 rgba(255, 150, 0, 0.5);
+    transition: transform 2s ease-out 0.25s;
+    color: rgb(255, 150, 0);
+}
+
+#foreground h2 {
+    color: rgb(255, 150, 0);
+    font-size: 1rem;
+}
+
+#curve {
+}
+
+#svgSlide {
+    transition: transform 3s ease-out 0.25s;
+}
+
+text {
+    font-size: 2rem;
+    fill: rgb(255, 150, 0);
+}
+
+.slideOut {
+    transform: translateY(-100%);
+}
+
+#screen {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+#gameBoard {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
+    height: 600px;
 }
 
 .row {
@@ -46,16 +106,19 @@ body {
     background-image: url(./images/sparkles.svg);
 }
 
-#gameBoard {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
-    height: 600px;
-
-}
-
 #gameBoard, #gameBoard > div {
     gap: 15px;
 }
 
-
+#footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: rgb(255, 150, 0);
+    background-color: rgba(0, 0, 0, 0.6);
+    width: 100%;
+    height: 6%;
+    text-align: center;
+    border-top: 1px solid orange;
+    box-shadow: 0 0 80px 0 rgba(255, 150, 0, 0.5);
+}
