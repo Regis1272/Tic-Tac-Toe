@@ -263,6 +263,12 @@ function animateSqr(playerId: number, square: HTMLElement) {
     square.classList.add('square_fade');
 }
 
+function testTranslate() {
+    let test = document.getElementById('foreground') as HTMLElement;
+    let test2 = document.getElementById('svgSlide') as HTMLElement;
+    test.classList.add('slideOut');
+    test2.classList.add('slideOut');
+}
 
 let ticTacArray: GameState =
 		[0,0,0

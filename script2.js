@@ -211,6 +211,12 @@ function animateSqr(playerId, square) {
     }
     square.classList.add('square_fade');
 }
+function testTranslate() {
+    let test = document.getElementById('foreground');
+    let test2 = document.getElementById('svgSlide');
+    test.classList.add('slideOut');
+    test2.classList.add('slideOut');
+}
 let ticTacArray = [0, 0, 0,
     0, 0, 0,
     0, 0, 0];
