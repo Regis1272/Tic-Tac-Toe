@@ -105,6 +105,7 @@ const buildBoard = (() => {
 })();
 
 // Add event handlers and interaction to board
+// contains win-checks
 const addLogic = () => {
 
     const handlePlay = (index: number) => {
@@ -112,8 +113,10 @@ const addLogic = () => {
         console.log("Current Turn: " + currentTurn);
         if (currentTurn % 2 === 1) {
             playTurn(player1, index);
+            checkWin(ticTacArray, player1);
         } else {
             playTurn(player2, index);
+            checkWin(ticTacArray, player2);
         }
     }
 
@@ -138,6 +141,107 @@ const addLogic = () => {
         curSquare.removeEventListener('click', () => handlePlay(sqrId));
     }
 
+
+    // calculates trophy indices for each win condition
+    // these will be matched with values at the same indices in the current game state
+    function getWinIndex() {
+
+		const winStates = [
+			// Horizontal wins
+			['🏆', '🏆', '🏆',
+			'🔲', '🔲', '🔲',
+			'🔲', '🔲', '🔲'],
+
+			['🔲', '🔲', '🔲',
+			'🏆', '🏆', '🏆',
+			'🔲', '🔲', '🔲'],
+
+			['🔲', '🔲', '🔲',
+			'🔲', '🔲', '🔲',
+			'🏆', '🏆', '🏆'],
+
+			// Vertical wins
+			['🏆', '🔲', '🔲',
+			'🏆', '🔲', '🔲',
+			'🏆', '🔲', '🔲'],
+
+			['🔲', '🏆', '🔲',
+			'🔲', '🏆', '🔲',
+			'🔲', '🏆', '🔲'],
+
+			['🔲', '🔲', '🏆',
+			'🔲', '🔲', '🏆',
+			'🔲', '🔲', '🏆'],
+
+			// Diagonal wins
+			['🏆', '🔲', '🔲',
+			'🔲', '🏆', '🔲',
+			'🔲', '🔲', '🏆'],
+
+			['🔲', '🔲', '🏆',
+			'🔲', '🏆', '🔲',
+			'🏆', '🔲', '🔲']
+		];
+
+        let winIndices: number[][]= [];
+        for (let i = 0; i < winStates.length; i++) {
+            winIndices[i] = [];
+            for (let j = 0; j < winStates[i].length; j++) {
+                if (winStates[i][j] === '🏆') {
+                    winIndices[i].push(j);
+                }
+            }
+            console.log("win Indices: " + winIndices);
+        }
+
+        console.log('final win indices: ' + winIndices);
+        console.log('3rd index of win indices: ' + winIndices[2]);
+        console.log('5rd index of win indices: ' + winIndices[4]);
+        console.log('3rd index of 3rd index of win indices: ' + winIndices[2][2]);
+        return winIndices;
+    }
+
+    let winIndex = getWinIndex();
+
+    // Using the win indices, checks for win against curr game state
+	const checkWin = (gameState: GameState, player: Player) => {
+
+        // converts to a player-neutral format
+		const flattenBoard = (gameState: GameState, ticVal: number | string) => {
+			return gameState.map(element => {
+				if (element === ticVal) {
+					return '🏆';
+				} else {
+					return '🔲';
+				}
+			});
+		}
+		
+		//BUG: When there a player has made more than 3 moves, the flattened board will never match any win state.
+		let gameStateNew = flattenBoard(gameState, player.ticVal);
+		console.log("Current Player Win State: " + gameStateNew);
+
+        let gameChecker: number[][] = [];
+        for (let i = 0; i < winIndex.length; i++) {
+            gameChecker[i] = [];
+            for (let j = 0; j < winIndex[i].length; j++) {  
+                // get val at the indices of gameStateNew that are contained within winIndex[j];
+                let winItem = winIndex[i][j];
+                if (gameStateNew[winItem] == '🏆') {
+                    gameChecker[i].push(winItem);
+                } else {
+                    gameChecker[i].push(-1);
+                }
+            }
+            if (gameChecker[i].toString() === winIndex[i].toString()){
+                console.log("OMGOMGOMG WIN DETECTED!")
+            }
+        }
+        console.log("gameChecker: " + gameChecker);
+	}
+
+    // add event handlers to foreground squares
+    // >>> trigger animation + play turn + check win conditions
     let foreground = document.querySelectorAll('.square_fg');
     foreground.forEach((square, index) => {
         square.addEventListener('click', () => handlePlay(index));
@@ -160,7 +264,7 @@ function animateSqr(playerId: number, square: HTMLElement) {
 }
 
 
-let ticTacArray: (number | string)[] =
+let ticTacArray: GameState =
 		[0,0,0
 		,0,0,0
 		,0,0,0];
@@ -175,4 +279,4 @@ let player2 = makePlayer('Computer', "stars");
         // players coin toss
         // winner gets to choose who goes first.
         // set variable "oddPlayer" equal to whoever goes first
-        // this will preserve existing game logic
+            // this will preserve existing game logic

@@ -49,8 +49,8 @@ body {
 #gameBoard {
     display: flex;
     flex-direction: column;
-    width: 800px;
-    height: 800px;
+    width: 600px;
+    height: 600px;
 
 }
 
